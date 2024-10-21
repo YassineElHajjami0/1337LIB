@@ -1,42 +1,398 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  color: white;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+:root {
+  --background: radial-gradient(
+    circle at center center,
+    #a25531 0%,
+    #79391e 55%,
+    #6a2c15 89%,
+    #662912 100%
+  );
+  --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+body {
+  width: 100vw;
+  min-height: 100vh; /* Ensures the container fills the viewport height */
+  overflow-x: hidden;
+  text-align: center;
+  color: var(--foreground);
+  background: var(--background);
+  height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 0 200px;
+}
+
+/* Apply styles to the scrollbar for Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+  height: 8px; /* Height of the scrollbar (for horizontal scrolling) */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent; /* Make the track invisible */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c35c08; /* Brown color for the scrollbar */
+  border-radius: 10px; /* Optional: round the corners of the scrollbar thumb */
+}
+
+/* Hover effect for the scrollbar thumb */
+::-webkit-scrollbar-thumb:hover {
+  background: #8c6b52; /* Lighter brown color on hover */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin; /* Thin scrollbar */
+  scrollbar-color: #c35c08 #662912; /* Brown color for the scrollbar thumb and transparent track */
+}
+
+.container .searchAndAdd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  color: #fff;
+  padding: 10px;
+  font-size: 18px;
+  margin: 70px 0px 30px 0px;
+  opacity: 0;
+  animation: fadeIn1 0.5s ease-in-out 1 forwards;
+  animation-delay: 1.5s;
+}
+@keyframes fadeIn1 {
+  0% {
+    opacity: 0;
   }
+  100% {
+    opacity: 1;
+  }
+}
+
+.container .searchAndAdd .search {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.container .searchAndAdd .search svg {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+}
+
+.container .searchAndAdd .search input {
+  background: transparent;
+  border: 2px solid #ffffff5d;
+  border-top-right-radius: 80px;
+  border-bottom-right-radius: 80px;
+  border-left: transparent;
+  padding: 7px;
+  outline: none;
+  color: #fff;
+  font-size: 16px;
+  width: 250px;
+}
+
+.container .searchAndAdd .add svg {
+  width: 25px;
+  height: 25px;
+  fill: #fff;
+  cursor: pointer;
+  transition: 0.3s ease-out;
+}
+
+.container .searchAndAdd .add {
+  background-color: transparent;
+  border: none;
+}
+
+.container .searchAndAdd .add svg:hover {
+  rotate: 90deg;
+}
+
+@keyframes fadeIn2 {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container .books .book {
+  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  opacity: 0;
+  animation: fadeIn2 0.5s ease-in-out 1 forwards;
+  animation-delay: 0.5s;
+}
+
+.container .books .book img {
+  width: 40%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.container .books .book .bookInfo {
+  text-align: left;
+  width: 60%;
+}
+
+.container .books .book .bookInfo .title {
+  margin-bottom: 15px;
+}
+
+.container .books .book .bookInfo .description {
+  line-height: 1.4;
+  color: #ffffffb5;
+  font-size: 17px;
+}
+
+.container .books .book .bookInfo .author {
+  color: #d66534;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 30px;
+  position: relative;
+  transition: 0.3s ease-out;
+  padding: 0px 5px;
+}
+.container .books .book .bookInfo .author::before {
+  content: "";
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 0%;
+  height: 100%;
+  background-color: #d66534;
+  transition: 0.3s ease-out;
+  z-index: -1;
+}
+
+.container .books .book:hover .bookInfo .author {
+  color: #fff;
+}
+.container .books .book:hover .bookInfo .author::before {
+  width: 100%;
+}
+
+/*----------popup create --------*/
+
+.popUpCreate {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px 50px;
+  width: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #8a31118a;
+  border-radius: 10px;
+  opacity: 0;
+  animation: fadeIn3 0.5s ease-in-out 1 0.5s forwards;
+  z-index: 5;
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.041);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.backgroundDark {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #2b211979;
+  opacity: 0;
+  animation: fadeIn1 0.5s ease-out 1 0.3s forwards;
+  z-index: 4;
+  backdrop-filter: blur(5px);
+}
+
+@keyframes fadeIn3 {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%, -50%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.popUpCreate h2 {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.popUpCreate .error {
+  color: tomato;
+  transition: 0.3s ease-out;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: fadeIn1 0.5s ease-out forwards;
+}
+.popUpCreate .success {
+  color: rgb(23, 200, 23);
+  transition: 0.3s ease-out;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: fadeIn1 0.5s ease-out forwards;
+}
+
+.popUpCreate .closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  transition: 0.3s ease-out;
+  width: fit-content;
+}
+.popUpCreate .closeBtn:hover svg {
+  transition: 0.3s ease-out;
+}
+.popUpCreate .closeBtn:active svg {
+  scale: 0.9;
+}
+.popUpCreate .closeBtn:hover svg {
+  fill: #b04818;
+}
+
+.popUpCreate div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+}
+.popUpCreate div.area {
+  align-items: flex-start;
+}
+.popUpCreate div label {
+  font-size: 18px;
+  font-weight: 600;
+  width: 33%;
+  text-align: left;
+}
+.popUpCreate div input,
+.popUpCreate div textarea {
+  width: 80%;
+  padding: 5px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #ffffff71;
+  outline: none;
+  font-size: 16px;
+}
+
+.popUpCreate div textarea {
+  resize: none;
+  height: 100px;
+  overflow: auto;
+  font-size: 16px;
+}
+
+.popUpCreate div select {
+  width: 80%;
+  padding: 5px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #79391e;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.popUpCreate div input[type="file"] {
+  width: 80%;
+  padding: 5px;
+  border: 2px dashed #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: border-color 0.3s ease-in-out;
+  font-size: 16px;
+  color: #666;
+}
+
+.popUpCreate div input[type="file"]:hover {
+  border-color: #a25531;
+}
+
+.popUpCreate div input[type="file"]:focus {
+  border-color: #79391e;
+  box-shadow: 0 0 5px rgba(121, 57, 30, 0.5);
+}
+
+.popUpCreate div input[type="file"]::file-selector-button {
+  background-color: #a25531;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.popUpCreate div input[type="file"]::file-selector-button:hover {
+  background-color: #79391e;
+}
+
+.popUpCreate .addBook {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #a25531;
+  color: #fff;
+  width: fit-content;
+  cursor: pointer;
+  transition: 0.3s ease-out;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.popUpCreate .addBook:hover {
+  background-color: #8e4321;
+}
+
+.popUpCreate .addBook:active {
+  scale: 0.95;
 }
