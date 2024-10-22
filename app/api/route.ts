@@ -111,9 +111,69 @@ export async function POST(req: NextRequest) {
   }
 }
 
+// export async function PUT(req: NextRequest) {
+//   try {
+//     // Use the `FormData` API to parse the request body
+//     const formData = await req.formData();
+
+//     // Extract fields from the form data
+//     const id = formData.get("id")?.toString() || ""; // Get the book ID
+//     const name = formData.get("name")?.toString() || "";
+//     const author = formData.get("author")?.toString() || "";
+//     const description = formData.get("description")?.toString() || "";
+//     const category = formData.get("category")?.toString() || "";
+//     const file = formData.get("file") as File;
+
+//     console.log("Parsed fields:", { id, name, author, description, category });
+//     console.log("Uploaded file:", file);
+
+//     // Establish a connection to the MySQL database
+//     const connection = await mysql.createConnection({
+//       host: "sql7.freesqldatabase.com",
+//       user: "sql7739895",
+//       password: "kcCnAhJWWX",
+//       database: "sql7739895",
+//     });
+
+//     // Prepare the SQL update statement
+//     let updateQuery =
+//       "UPDATE books SET name = ?, author = ?, description = ?, category = ?";
+//     const values = [name, author, description, category];
+
+//     // If a file is uploaded, you may need to handle it and update the cover URL
+//     if (file) {
+//       // Logic for uploading the file goes here (e.g., to cloud storage)
+//       const fileUrl = "url_to_uploaded_file"; // Replace with the actual file URL after uploading
+//       updateQuery += ", cover = ?";
+//       values.push(fileUrl);
+//     }
+
+//     // Append the WHERE clause to update the correct book
+//     updateQuery += " WHERE id = ?";
+//     values.push(id);
+
+//     // Execute the update statement
+//     const [result] = await connection.execute(updateQuery, values);
+
+//     // Close the database connection
+//     await connection.end();
+
+//     return NextResponse.json(
+//       { message: "Book updated successfully" },
+//       { status: 200 }
+//     );
+//   } catch (error) {
+//     console.error("Error processing request:", error);
+//     return NextResponse.json(
+//       { error: "An error occurred while processing the request" },
+//       { status: 500 }
+//     );
+//   }
+// }
+
 export async function PUT(req: NextRequest) {
   try {
-    // Use the `FormData` API to parse the request body
+    // Parse the request body using `FormData` API
     const formData = await req.formData();
 
     // Extract fields from the form data
@@ -122,7 +182,7 @@ export async function PUT(req: NextRequest) {
     const author = formData.get("author")?.toString() || "";
     const description = formData.get("description")?.toString() || "";
     const category = formData.get("category")?.toString() || "";
-    const file = formData.get("file") as File;
+    const file = formData.get("file") as File | null; // Allow for optional file upload
 
     console.log("Parsed fields:", { id, name, author, description, category });
     console.log("Uploaded file:", file);
@@ -140,10 +200,17 @@ export async function PUT(req: NextRequest) {
       "UPDATE books SET name = ?, author = ?, description = ?, category = ?";
     const values = [name, author, description, category];
 
-    // If a file is uploaded, you may need to handle it and update the cover URL
+    // Handle file upload if a new file is provided
     if (file) {
-      // Logic for uploading the file goes here (e.g., to cloud storage)
-      const fileUrl = "url_to_uploaded_file"; // Replace with the actual file URL after uploading
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = new Uint8Array(arrayBuffer);
+
+      // Save the file to the public/images directory
+      const filePath = `./public/images/${file.name}`;
+      await fs.writeFile(filePath, buffer);
+
+      // Update the cover URL
+      const fileUrl = `http://localhost:3000/images/${file.name}`;
       updateQuery += ", cover = ?";
       values.push(fileUrl);
     }

@@ -11,8 +11,18 @@ const DB_CONFIG = {
 
 const ADMIN_CREDENTIALS = {
   name: "admin", // Change this to your admin name
-  password: "password123", // Change this to your admin password
+  password: "yassine123", // Change this to your admin password
 };
+
+export async function GET() {
+  return NextResponse.json(
+    {
+      message: "Login successful",
+      token: "aqLPsHr7dYcG0Sd8JvRjGPakZqAtIeat2IZ4PA72VkOo893I9kC0D5kScWgp03k9",
+    },
+    { status: 200 }
+  );
+}
 
 export async function POST(req: NextRequest) {
   try {
