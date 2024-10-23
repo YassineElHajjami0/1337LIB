@@ -5,15 +5,17 @@ type BookData = {
   name: string;
   author: string;
   description: string;
-  cover: string | File | null; // Accept both string (for URL) or File
+  cover: string | File | null;
   category: string | null;
   availability: boolean | undefined;
 };
 
 const PopUpDelete = ({
+  setBooks,
   setShowPopUp,
   book,
 }: {
+  setBooks: Dispatch<SetStateAction<BookData[]>>;
   setShowPopUp: Dispatch<
     SetStateAction<{
       create: boolean;
@@ -36,12 +38,17 @@ const PopUpDelete = ({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: book?.id }), // Send the book ID in the request body
+        body: JSON.stringify({ id: book?.id }),
       });
 
       if (!response.ok) {
         throw new Error("Failed to delete the book");
       }
+
+      const data = await response.json();
+      console.log("new data", data);
+      setBooks(data.books);
+
       setShowResponse({
         success: true,
         message: "Book deleted successfully.",
@@ -83,14 +90,14 @@ const PopUpDelete = ({
 
         <div>
           <button
-            className="delete"
+            className={disabledBtn ? "disabled" : "delete"}
             disabled={disabledBtn}
             onClick={handleDelete}
           >
             Delete
           </button>
           <button
-            className="cancel"
+            className={"cancel"}
             onClick={() =>
               setShowPopUp({ create: false, update: false, delete: false })
             }

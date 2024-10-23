@@ -118,32 +118,19 @@ const PopUpUpdate = ({
     formData.append("description", description);
     formData.append("category", String(categories));
     if (cover instanceof File) {
-      formData.append("file", cover); // Only append if the cover is a new file
+      formData.append("file", cover);
     }
 
     try {
       const response = await fetch("/api", {
-        method: "PUT", // Assuming you're doing an update here
+        method: "PUT",
         body: formData,
       });
 
       if (response.ok) {
-        setBooks((prevBooks) => {
-          const updatedBooks = prevBooks.map((book) => {
-            if (book.id === bookData.id) {
-              return {
-                ...book,
-                name: bookData.name,
-                author: bookData.author,
-                description: bookData.description,
-                category: bookData.category,
-                cover: bookData.cover,
-              };
-            }
-            return book;
-          });
-          return updatedBooks;
-        });
+        const data = await response.json();
+        console.log("new data", data);
+        setBooks(data.books);
         setBookData({
           id: null,
           name: "",
@@ -160,6 +147,14 @@ const PopUpUpdate = ({
         setTimeout(() => {
           setShowPopUp({ create: false, update: false, delete: false });
         }, 2000);
+        const updatedBooksResponse = await fetch(`/api`);
+        if (!updatedBooksResponse.ok) {
+          throw new Error("Failed to fetch updated books");
+        }
+        const updatedBooks = await updatedBooksResponse.json();
+
+        // Update the books state with the new list
+        setBooks(updatedBooks);
       } else {
         setDisabledBtn(false);
         setShowResponse({ success: false, message: "Failed to update book." });
@@ -238,8 +233,6 @@ const PopUpUpdate = ({
             <option value="">Select Category</option>
             {categories.map((cat) => (
               <option key={cat.id} value={cat.name}>
-                {" "}
-                {/* Ensure this value corresponds to the category string */}
                 {cat.name}
               </option>
             ))}

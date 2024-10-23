@@ -1,7 +1,7 @@
 .NavBar {
   position: fixed;
   background-color: transparent;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(2px);
   width: 100%;
   top: 0;
   left: 0;
@@ -18,6 +18,21 @@
   animation-delay: 1s;
 }
 
+@media (max-width: 1440px) {
+  .NavBar {
+    padding: 5px 200px;
+  }
+}
+@media (max-width: 1024px) {
+  .NavBar {
+    padding: 5px 100px;
+  }
+}
+@media (max-width: 768px) {
+  .NavBar {
+    padding: 5px 40px;
+  }
+}
 @keyframes fadeIn {
   0% {
     opacity: 0;

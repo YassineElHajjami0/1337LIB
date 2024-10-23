@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import mysql from "mysql2/promise";
 
-// Replace these values with your actual database credentials
+//-------------------------------------
+// credentials are public because the DB service is free and it will end in 7 days
+//-------------------------------------
+
 const DB_CONFIG = {
   host: "sql7.freesqldatabase.com",
   user: "sql7739895",
@@ -10,8 +13,8 @@ const DB_CONFIG = {
 };
 
 const ADMIN_CREDENTIALS = {
-  name: "admin", // Change this to your admin name
-  password: "yassine123", // Change this to your admin password
+  name: "admin",
+  password: "yassine123",
 };
 
 export async function GET() {
@@ -27,9 +30,8 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     // Parse the request body
-    const { name, password } = await req.json(); // Assuming your frontend sends JSON
+    const { name, password } = await req.json();
 
-    // Validate the credentials
     if (
       name !== ADMIN_CREDENTIALS.name ||
       password !== ADMIN_CREDENTIALS.password

@@ -15,8 +15,10 @@ interface BookData {
 }
 
 const PopUpCreate = ({
+  setBooks,
   setShowPopUp,
 }: {
+  setBooks: any;
   setShowPopUp: Dispatch<
     SetStateAction<{
       create: boolean;
@@ -128,6 +130,9 @@ const PopUpCreate = ({
         setTimeout(() => {
           setShowPopUp({ create: false, update: false, delete: false });
         }, 2000);
+        const data = await response.json();
+        console.log("new data", data);
+        setBooks(data.books);
       } else {
         setDisabledBtn(false);
         setShowResponse({ success: false, message: "Failed to add book." });

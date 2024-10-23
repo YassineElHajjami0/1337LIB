@@ -49,6 +49,12 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    setSearchBooks(books);
+  }, [books]);
+
+  console.log("books:", books);
+
+  useEffect(() => {
     console.log("isAdmin:", isAdmin);
   }, [isAdmin]);
 
@@ -65,12 +71,17 @@ export default function Home() {
   return (
     <div
       className={
-        showPopUp.create // || showPopUp.update || showPopUp.delete
+        showPopUp.create || showPopUp.update || showPopUp.delete
           ? "container noScroll"
           : "container"
       }
     >
-      {showPopUp.create && <PopUpCreate setShowPopUp={setShowPopUp} />}
+      {showPopUp.create && (
+        <PopUpCreate
+          setBooks={setBooks}
+          setShowPopUp={setShowPopUp}
+        />
+      )}
       {showPopUp.update && (
         <PopUpUpdate
           setBooks={setBooks}
@@ -79,7 +90,11 @@ export default function Home() {
         />
       )}
       {showPopUp.delete && (
-        <PopUpDelete book={selectedBook} setShowPopUp={setShowPopUp} />
+        <PopUpDelete
+          setBooks={setBooks}
+          book={selectedBook}
+          setShowPopUp={setShowPopUp}
+        />
       )}
       <div className="searchAndAdd">
         <div className="search">
@@ -108,9 +123,9 @@ export default function Home() {
           <div className="book" key={book.id}>
             {index % 2 ? (
               <>
-                {/* <div className="canvasContainer">
-                  <BookModel />
-                </div> */}
+                <div className="canvasContainer">
+                  <BookModel image={book.cover?.toString()} />
+                </div>
                 <img
                   className="image"
                   src={book.cover?.toString() || ""}
@@ -190,9 +205,9 @@ export default function Home() {
                     </>
                   )}
                 </div>
-                {/* <div className="canvasContainer">
-                  <BookModel />
-                </div> */}
+                <div className="canvasContainer">
+                  <BookModel image={book.cover?.toString()} />
+                </div>
                 <img
                   className="image"
                   src={book.cover?.toString() || ""}

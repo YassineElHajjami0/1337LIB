@@ -18,14 +18,62 @@
 
 body {
   width: 100vw;
-  min-height: 100vh; /* Ensures the container fills the viewport height */
   overflow-x: hidden;
   text-align: center;
   color: var(--foreground);
-  background: var(--background);
   height: 100vh;
   padding: 0 300px;
   font-family: var(--font-poppins), sans-serif;
+}
+
+@media (max-width: 1440px) {
+  body {
+    padding: 0 200px;
+  }
+}
+@media (max-width: 1024px) {
+  body {
+    padding: 0 100px;
+  }
+}
+@media (max-width: 768px) {
+  body {
+    padding: 0 30px;
+  }
+}
+@media (max-width: 426px) {
+  body {
+    padding: 0px;
+  }
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("/images/page.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: -1;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #361104a9;
+  z-index: -1;
+}
+
+::placeholder {
+  color: #ffffffba;
 }
 
 ::selection {
@@ -35,30 +83,27 @@ body {
 
 /* Apply styles to the scrollbar for Webkit browsers (Chrome, Safari) */
 ::-webkit-scrollbar {
-  width: 8px; /* Width of the scrollbar */
-  height: 8px; /* Height of the scrollbar (for horizontal scrolling) */
+  width: 8px;
+  height: 8px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
-  background: transparent; /* Make the track invisible */
+  background: transparent;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #c35c08; /* Brown color for the scrollbar */
-  border-radius: 10px; /* Optional: round the corners of the scrollbar thumb */
+  background: #c35c08;
+  border-radius: 10px;
 }
 
-/* Hover effect for the scrollbar thumb */
 ::-webkit-scrollbar-thumb:hover {
-  background: #8c6b52; /* Lighter brown color on hover */
+  background: #8c6b52;
 }
 
 /* For Firefox */
 * {
-  scrollbar-width: thin; /* Thin scrollbar */
-  scrollbar-color: #c35c08 #662912; /* Brown color for the scrollbar thumb and transparent track */
+  scrollbar-width: thin;
+  scrollbar-color: #c35c08 #662912;
 }
 
 .container.noScroll {
@@ -84,6 +129,13 @@ body {
   }
   100% {
     opacity: 1;
+  }
+}
+
+@media (max-width: 426px) {
+  .container .searchAndAdd {
+    margin: 60px 0px 30px 0px;
+    padding: 20px 30px;
   }
 }
 
@@ -151,12 +203,40 @@ body {
   opacity: 0;
   animation: fadeIn2 0.5s ease-in-out 1 forwards;
   animation-delay: 0.5s;
+  position: relative;
+}
+.container .books .book::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 1.5px;
+  background: linear-gradient(
+    to right,
+    #fff5f516 0%,
+    #e7e7e7 50%,
+    #fff5f516 100%
+  );
+  display: none;
+}
+
+@media (max-width: 426px) {
+  .container .books .book {
+    flex-direction: column;
+    padding-bottom: 10px;
+  }
+  .container .books .book::before {
+    display: block;
+  }
 }
 
 .container .books .book img {
   width: 40%;
   border-radius: 10px;
   overflow: hidden;
+  display: none;
 }
 
 .container .books .book .bookInfo {
@@ -165,7 +245,16 @@ body {
   width: 60%;
 }
 .container .books .book .canvasContainer {
-  height: 300px;
+  height: 400px;
+  overflow: visible;
+}
+@media (max-width: 768px) {
+  .container .books .book img {
+    display: block;
+  }
+  .container .books .book .canvasContainer {
+    display: none;
+  }
 }
 
 .container .books .book .bookInfo .title {
@@ -231,7 +320,7 @@ body {
   width: 100%;
 }
 
-/*----------popup create --------*/
+/*----------popup create and update and delete --------*/
 
 .popUpCreate {
   position: fixed;
@@ -368,6 +457,9 @@ body {
   cursor: pointer;
   transition: 0.3s ease-out;
   width: fit-content;
+}
+.popUpDelete .disabled {
+  cursor: not-allowed;
 }
 .popUpCreate .closeBtn:hover svg,
 .popUpUpdate .closeBtn:hover svg,

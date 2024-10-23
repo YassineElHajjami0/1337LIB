@@ -34,16 +34,13 @@ const AdminLogin = () => {
         localStorage.setItem("token", data.token);
       }
 
-      // Redirect to the home page
       router.push("/");
     }
-
-    // Handle successful login (e.g., redirect, show a success message, etc.)
-    console.log("Login successful");
   };
 
   return (
     <form onSubmit={handleSubmit} className="form-group">
+      <h2>Admin Login</h2>
       <label>Name</label>
       <input
         placeholder="name"
