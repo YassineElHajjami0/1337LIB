@@ -57,9 +57,12 @@ export function Model({
       const texture = loader.load(image, (texture) => {
         (texture as any).encoding = THREE.SRGBColorSpace;
 
-        // Rotate texture to be vertical
         texture.rotation = Math.PI / 2;
         texture.center.set(0.5, 0.5);
+        texture.flipY = true;
+
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.repeat.x = -1; // Flip horizontally
 
         const material = new THREE.MeshBasicMaterial({
           map: texture,
