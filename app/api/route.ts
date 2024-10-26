@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
         author,
         description,
         category,
-        `http://localhost:3000/images/${file.name}`,
+        `https://1337-lib.vercel.app/images/${file.name}`,
       ]
     );
     const [books] = await connection.execute("SELECT * FROM books");
@@ -118,7 +118,7 @@ export async function PUT(req: NextRequest) {
       const filePath = `./public/images/${file.name}`;
       await fs.writeFile(filePath, buffer);
 
-      const fileUrl = `http://localhost:3000/images/${file.name}`;
+      const fileUrl = `https://1337-lib.vercel.app/images/${file.name}`;
       updateQuery += ", cover = ?";
       values.push(fileUrl);
     }
