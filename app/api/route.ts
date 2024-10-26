@@ -2,20 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "node:fs/promises";
 import mysql from "mysql2/promise";
 
-export const config = {
-  api: {
-    bodyParser: false, // Disabling bodyParser to manually handle FormData
-  },
-};
-
-// export async function GET() {
-//   return new Response(JSON.stringify(books), {
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   });
-// }
-
 export async function GET() {
   //-------------------------------------
   // credentials are public because the DB service is free and it will end in 7 days
