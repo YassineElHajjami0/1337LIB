@@ -7,9 +7,9 @@ import mysql from "mysql2/promise";
 
 const DB_CONFIG = {
   host: "sql7.freesqldatabase.com",
-  user: "sql7739895",
-  password: "kcCnAhJWWX",
-  database: "sql7739895",
+  user: "sql7741502",
+  password: "gPwvJtmfVc",
+  database: "sql7741502",
 };
 
 const ADMIN_CREDENTIALS = {

@@ -8,9 +8,9 @@ export async function GET() {
   //-------------------------------------
   const connection = await mysql.createConnection({
     host: "sql7.freesqldatabase.com",
-    user: "sql7739895",
-    password: "kcCnAhJWWX",
-    database: "sql7739895",
+    user: "sql7741502",
+    password: "gPwvJtmfVc",
+    database: "sql7741502",
   });
 
   try {
@@ -52,9 +52,9 @@ export async function POST(req: NextRequest) {
     await fs.writeFile(`./public/images/${file.name}`, buffer);
     const connection = await mysql.createConnection({
       host: "sql7.freesqldatabase.com",
-      user: "sql7739895",
-      password: "kcCnAhJWWX",
-      database: "sql7739895",
+      user: "sql7741502",
+      password: "gPwvJtmfVc",
+      database: "sql7741502",
     });
 
     const [result] = await connection.execute(
@@ -100,9 +100,9 @@ export async function PUT(req: NextRequest) {
 
     const connection = await mysql.createConnection({
       host: "sql7.freesqldatabase.com",
-      user: "sql7739895",
-      password: "kcCnAhJWWX",
-      database: "sql7739895",
+      user: "sql7741502",
+      password: "gPwvJtmfVc",
+      database: "sql7741502",
     });
 
     // SQL update
@@ -152,9 +152,9 @@ export async function DELETE(req: NextRequest) {
 
     const connection = await mysql.createConnection({
       host: "sql7.freesqldatabase.com",
-      user: "sql7739895",
-      password: "kcCnAhJWWX",
-      database: "sql7739895",
+      user: "sql7741502",
+      password: "gPwvJtmfVc",
+      database: "sql7741502",
     });
 
     await connection.execute("DELETE FROM books WHERE id = ?", [id]);
