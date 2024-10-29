@@ -10,7 +10,7 @@ interface BookData {
   name: string;
   author: string;
   description: string;
-  category: number | null;
+  category: string;
   file: File | null;
 }
 
@@ -31,7 +31,7 @@ const PopUpCreate = ({
     name: "",
     author: "",
     description: "",
-    category: null,
+    category: "",
     file: null,
   });
   const [categories, setCategories] = useState<Category[]>([]);
@@ -46,6 +46,7 @@ const PopUpCreate = ({
       try {
         const response = await fetch("/api/categories");
         const data = await response.json();
+        console.log("categories>>>>", data);
         setCategories(data);
       } catch (error) {
         console.error("Failed to fetch categories:", error);
@@ -65,7 +66,7 @@ const PopUpCreate = ({
   };
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedCategory = Number(e.target.value);
+    const selectedCategory = e.target.value;
     setBookData((prevData) => ({
       ...prevData,
       category: selectedCategory,
@@ -123,7 +124,7 @@ const PopUpCreate = ({
           name: "",
           author: "",
           description: "",
-          category: null,
+          category: "",
           file: null,
         });
         setShowResponse({ success: true, message: "Book added successfully." });
