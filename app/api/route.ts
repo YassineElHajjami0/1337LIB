@@ -59,13 +59,7 @@ export async function POST(req: NextRequest) {
 
     const [result] = await connection.execute(
       "INSERT INTO books (name, author, description, category, cover) VALUES (?, ?, ?, ?, ?)",
-      [
-        name,
-        author,
-        description,
-        category,
-        `https://1337-lib.vercel.app/images/${file.name}`,
-      ]
+      [name, author, description, category, `/images/${file.name}`]
     );
     const [books] = await connection.execute("SELECT * FROM books");
 
@@ -118,7 +112,7 @@ export async function PUT(req: NextRequest) {
       const filePath = `./public/images/${file.name}`;
       await fs.writeFile(filePath, buffer);
 
-      const fileUrl = `https://1337-lib.vercel.app/images/${file.name}`;
+      const fileUrl = `/images/${file.name}`;
       updateQuery += ", cover = ?";
       values.push(fileUrl);
     }
