@@ -45,4 +45,3 @@ Usage
         Browse the available books.
         Utilize the search feature to find specific titles.
 
-Live Demo : https://1337-lib.vercel.app/
